@@ -3,9 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 
-class AdminUpdateRequest extends FormRequest
+class LeaveUpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,15 +21,10 @@ class AdminUpdateRequest extends FormRequest
      */
     public function rules(): array
     {
-        $id = auth()->user()->id;
         return [
-            'first_name' => 'string',
-            'last_name' => 'string',
-            'email' => [
-                'string',
-                Rule::unique('admins')->ignore($id),
-            ],
-            'password' => 'string|confirmed'
+            'reason' => 'string',
+            'start_date' => 'date|before_or_equal:end_date',
+            'end_date' => 'date|after_or_equal:start_date'
         ];
     }
 }

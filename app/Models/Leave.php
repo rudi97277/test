@@ -16,6 +16,8 @@ class Leave extends Model
         'admin_id'
     ];
 
+    public const MAX_YEAR_LEAVE = 5;
+
     public function employee()
     {
         return $this->belongsTo(Employee::class);

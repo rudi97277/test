@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\LeaveIndexRequest;
 use App\Http\Requests\LeaveStoreRequest;
+use App\Http\Requests\LeaveUpdateRequest;
 use App\Http\Resources\LeaveResource;
 use App\Models\Leave;
 use App\Services\LeaveService;
@@ -19,9 +21,10 @@ class LeaveController extends Controller
         $this->service = $service;
     }
 
-    public function index()
+    public function index(LeaveIndexRequest $request)
     {
-        //
+        $leaves = $this->service->getAllLeave($request);
+        return $this->showPaginate('leaves', collect(LeaveResource::collection($leaves)), collect($leaves));
     }
 
     public function store(LeaveStoreRequest $request)
@@ -30,35 +33,21 @@ class LeaveController extends Controller
         return $this->showOne(new LeaveResource($leave));
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Leave $leave)
+    public function show($id)
     {
-        //
+        $leave = $this->service->getLeaveById($id);
+        return $this->showOne(new LeaveResource($leave));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Leave $leave)
+    public function update(LeaveUpdateRequest $request, $id)
     {
-        //
+        $status = $this->service->updateLeaveById($request, $id);
+        return $this->showOne($status);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Leave $leave)
+    public function destroy($id)
     {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Leave $leave)
-    {
-        //
+        $status = $this->service->deleteLeaveById($id);
+        return $this->showOne($status);
     }
 }

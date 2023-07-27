@@ -3,12 +3,14 @@
 namespace App\Services;
 
 use App\Models\Admin;
+use App\Traits\AdminInfo;
 use Illuminate\Support\Facades\Hash;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class AdminServices
 {
 
+    use AdminInfo;
     public function getAllAdmin($request)
     {
         return Admin::paginate($request->input('page_size', 10));
@@ -35,15 +37,10 @@ class AdminServices
 
     public function updateAdminProfile($request)
     {
-        $data = $request->only('first_name', 'last_name');
+        $data = $request->only('first_name', 'last_name', 'email', 'password');
         $currentAdmin = $this->getCurrentAdmin();
         $admin = Admin::findOrFail($currentAdmin->id);
         return $admin->update($data);
-    }
-
-    public function getCurrentAdmin()
-    {
-        return auth()->user();
     }
 
     public function deleteAccount()

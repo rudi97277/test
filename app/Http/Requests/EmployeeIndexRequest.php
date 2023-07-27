@@ -23,7 +23,8 @@ class EmployeeIndexRequest extends FormRequest
     {
         return [
             'page_size' => 'required|integer|gt:0',
-            'page' => 'required|integer|gt:0'
+            'page' => 'required|integer|gt:0',
+            'include' => 'nullable|in:leave',
         ];
     }
 }

@@ -9,7 +9,9 @@ class EmployeeService
 
     public function getAllEmployee($request)
     {
-        return Employee::paginate($request->input('page_size', 10));
+        return Employee::when($request->include, function ($query) {
+            $query->with('leave');
+        })->paginate($request->input('page_size', 10));
     }
 
     public function createNewEmployee($request)

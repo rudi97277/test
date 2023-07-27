@@ -31,6 +31,6 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('', [AdminController::class, 'index']);
     });
 
-    Route::apiResource('employees', EmployeeController::class);
     Route::apiResource('employees/leave', LeaveController::class);
+    Route::apiResource('employees', EmployeeController::class);
 });

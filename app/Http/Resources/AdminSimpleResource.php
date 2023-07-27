@@ -5,7 +5,7 @@ namespace App\Http\Resources;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class LeaveResource extends JsonResource
+class AdminSimpleResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -16,11 +16,8 @@ class LeaveResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'employee' => new EmployeeSimpleResource($this->employee),
-            'reason' => $this->reason,
-            'start_date' => $this->start_date,
-            'end_date' => $this->end_date,
-            'created_by' => new AdminSimpleResource($this->createdBy),
+            'first_name' => $this->first_name,
+            'last_name' => $this->last_name,
         ];
     }
 }

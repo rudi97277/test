@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Services\LeaveService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -24,6 +25,7 @@ class EmployeeResource extends JsonResource
             'address' => $this->address,
             'gender' => $this->gender,
             'created_at' => Carbon::parse($this->created_at)->format('Y-m-d H:i:s'),
+            'leave' => LeaveSimpleResource::collection($this->whenLoaded('leave')),
         ];
     }
 }
